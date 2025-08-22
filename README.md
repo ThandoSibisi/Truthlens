@@ -5,3 +5,8 @@ News Comparison and Bias Analyzer- separates the "facts" from the "spin"
 - Pull text directly from article URLs
 - Analyzes tone, check if article sounds neutral or emotional
 - Spots bias in articles 
+## How to use 
+1. Access article you want to analyze
+2. Copy article and paste into textbox 
+3. Click Analyze
+4. Read: Cross-source facts 

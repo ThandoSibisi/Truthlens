@@ -159,67 +159,17 @@
   <nav>
     <ul>
       <li><a href="home.html">Home</a></li>
-      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="/about">About Us</a></li>
     </ul>
   </nav>
-
+ <main>
+    <div class="form-container">
+      <h2>About Us</h2>
+      <p>Welcome to TrueLens! We are dedicated to providing accurate and reliable information to help you navigate through the complexities of today's world. Our mission is to empower individuals with the knowledge they need to make informed decisions.</p>
+      <p>At TrueLens, we believe that transparency and clarity are essential in an age where misinformation is rampant. Our team of experts works tirelessly to verify facts and present them in a clear and concise manner.</p>
+      <p>Whether you're looking for insights on current events, health information, or technology trends, TrueLens is your trusted source for truth. Join us on our journey to illuminate the path of information and make the world a better-informed place.</p>
+    </div>
     
-
-  <textarea id="textInput" placeholder="Enter your article here..."></textarea><br>
-  <button onclick="submitArticle()">Analyze Article</button>
-
-  <div id="message"></div>
-
-<script>
-  async function submitArticle() {
-    const text = document.getElementById("textInput").value.trim();
-    const messageDiv = document.getElementById("message");
-
-    if (!text) {
-      messageDiv.innerText = "Please enter an article.";
-      messageDiv.className = "error";
-      return;
-    }
-
-    messageDiv.innerText = "Analyzing...";
-    messageDiv.className = "";
-
-    // This is the prompt for Ollama
-    const prompt = `Analyze the following article and state whether it is biased or unbiased.
-    Also explain why.
-    Article:
-    """
-    ${text}
-    """`;
-
-    try {
-      const response = await fetch("http://localhost:11434/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "llama3",   // you can use llama2, mistral, or any other installed Ollama model
-          prompt: prompt,
-          stream: false      // stream false = get full text in one response
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.response) {
-        messageDiv.innerHTML = data.response;
-        messageDiv.className = "success";
-      } else {
-        messageDiv.innerHTML = "Error: No response from model.";
-        messageDiv.className = "error";
-      }
-
-    } catch (err) {
-      messageDiv.innerHTML = "Request failed: " + err.message;
-      messageDiv.className = "error";
-    }
-  }
-</script>  </main>  
+ </main>  
 </body>
 </html>

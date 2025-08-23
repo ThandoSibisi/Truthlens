@@ -21,7 +21,7 @@ To report any bugs, please submit a report to the following email address:
 ## Authors and Acknowledgements
 The author of this README was Thandokuhle Sibisi and was edited by Samora Peter.
 
-TrueLens was design and created by Navier Gray, Thandokuhle Sibisi and Samora Peter for the Otinga Hackathon.
+TrueLens was designed and created by Navier Gray, Thandokuhle Sibisi and Samora Peter for the Otinga Hackathon.
 
 ChatGPT was used to generate parts of the code and Ollama is used as the AI analyzer.
 

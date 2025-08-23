@@ -181,20 +181,16 @@
       return;
     }
 
-    messageDiv.innerText = "Analyzing with Ollama...";
+    messageDiv.innerText = "Analyzing...";
     messageDiv.className = "";
 
-    const prompt = `Analyze the following article and determine:
-- Main topic
-- Summary
-- Named entities (people, places, organizations)
-- Tone (positive/neutral/negative)
-- Whether the article shows signs of bias (yes/no + short explanation)
-
-Article:
-"""
-${text}
-"""`;
+    // This is the prompt for Ollama
+    const prompt = `Analyze the following article and state whether it is biased or unbiased.
+    Also explain why.
+    Article:
+    """
+    ${text}
+    """`;
 
     try {
       const response = await fetch("http://localhost:11434/api/generate", {
@@ -203,35 +199,27 @@ ${text}
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "llama3",  // or mistral, or another Ollama model
-          prompt: prompt
+          model: "llama3",   // you can use llama2, mistral, or any other installed Ollama model
+          prompt: prompt,
+          stream: false      // stream false = get full text in one response
         })
       });
 
-      // Ollama streams responses line-by-line, so we need to handle that:
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let result = "";
+      const data = await response.json();
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        result += decoder.decode(value, { stream: true });
+      if (data.response) {
+        messageDiv.innerHTML = data.response;
+        messageDiv.className = "success";
+      } else {
+        messageDiv.innerHTML = "Error: No response from model.";
+        messageDiv.className = "error";
       }
 
-      // Ollama returns JSON lines, we need to parse them
-      const lines = result.trim().split("\n").map(line => JSON.parse(line));
-      const output = lines.map(l => l.response).join("");
-
-      messageDiv.innerText = output;
-      messageDiv.className = "success";
-
     } catch (err) {
-      messageDiv.innerText = "Request failed: " + err.message;
+      messageDiv.innerHTML = "Request failed: " + err.message;
       messageDiv.className = "error";
     }
   }
-</script>
-  </main>  
+</script>  </main>  
 </body>
 </html>
